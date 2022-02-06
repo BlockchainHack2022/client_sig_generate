@@ -1,0 +1,17 @@
+import SignResult, Sig from "./services.aqua"
+import Hello from "./hw.aqua"
+export Sig
+
+service DataProvider("data"):
+    provide_data() -> []u8
+
+func callSig(sigId: string, data: []u8) -> SignResult:
+    Sig sigId
+    signature <- Sig.sign(data)
+    <- signature
+
+
+func sayHello(peer: string, relay: string) -> string:
+    on peer via relay:
+        res <- Hello.greet()
+    <- res
